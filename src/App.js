@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import Welcome from './Components/Welcome';
+import Welcome from './Components/Welcome';
 
 const api = {
   key: "89d162a00d18dbfdc8e4e806bd7453c5",
@@ -11,14 +11,19 @@ function App() {
   const [weather, setWeather] = useState({});
   const [displayWeather, setDisplayWeather] = useState('');
   const [symbol, setSymbol] = useState('');
+  const [displayStatus, setDisplayStatus] = useState(1);
 
  function fetchForcast() {
   fetch(`${api.base}weather?q=${query}&units=imperial&APPID=${api.key}`)
   .then(res => res.json())
   .then(result => {
     setWeather(result);
-    setDisplayWeather((Math.round(result.main.temp)));
-    setSymbol('F');
+    setQuery('');
+    if(result.cod !== '404'){
+      setDisplayStatus(0);
+      setDisplayWeather((Math.round(result.main.temp)));
+      setSymbol('F');
+    }
   });
  }
 
@@ -26,31 +31,39 @@ function App() {
     if (evt.key === "Enter") {
       if(query !== ''){
         fetchForcast();
+        setDisplayStatus(0);
       }
     }
   }
 
   const fTempHandler = evt => {
-    if(query !== ''){
+    if(weather !== '' && weather.cod !== '404'){
       setSymbol('F');
       setDisplayWeather((Math.round(weather.main.temp)));
+    }
+    else {
+     // setGreeting('');
     }
   };
 
   const cTempHandler = evt => {
-    if(query !== ''){
+    if(weather !== '' && weather.cod !== '404'){
       setSymbol('C');
       const calcWeather = Math.round((weather.main.temp-32)/1.8000);
       setDisplayWeather(calcWeather);
+    }
+    else {
+      //setGreeting('');
     }
   };
 
   return (
     <>
-    
+    <Welcome className={(displayStatus !== 0) ? '' : 'hide'} />
     <div className={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? 'app warm' : 'app') : 'app'}>
       <main>
-      {(typeof weather.main != "undefined") ? (
+        <div className={(displayStatus !== 0) ? 'hide' : ''}>
+        {(typeof weather.main != "undefined") ? (
         <div>
           <div className="location-box">
             <div className="location">{weather.name}, {weather.sys.country}</div>
@@ -63,8 +76,10 @@ function App() {
             <div className="weather">{weather.weather[0].main}</div>
           </div>
         </div>
-        ) : (weather.message)}
+        ) : <h4 className="not-found">{(weather.message)}. Try city name, state, country</h4>}
+        </div>
 
+        <hr />
         
         <div className="search-box">
           <input 

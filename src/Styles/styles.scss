@@ -5,7 +5,6 @@
 @mixin flexCenter($height, $direction, $bg) {
    height: $height;
    display: flex;
-   justify-content: center;
    align-items: center;
    flex-direction: $direction;
    background: $bg;
@@ -20,12 +19,42 @@
 
 body{
    @include flexCenter(100vh, column, white);
-   font-family: Playfair-Display;
+   font-family: "Playfair-Display";
    color: #303030;
 }
 
 main {
    padding: 25px;
+}
+
+.hide {
+   visibility: hidden;
+}
+
+.greeting-box {
+   text-align: left;
+   transition: height 4s ease;
+   .greeting {
+      font-size: 3em;
+      font-weight: 900;
+   }
+   .medium-heading {
+      font-family: "Roboto";
+      font-size: 1.5em;
+      font-weight: 300;
+   }
+   .small-heading {
+      font-family: "Roboto";
+      font-size: 1em;
+      font-weight: 300;
+   }
+}
+
+.not-found {
+   font-family: "Roboto";
+   font-size: 1.5em;
+   font-weight: 300;
+   color:red;
 }
 
 .search-box {
@@ -40,7 +69,7 @@ main {
       border: 1px solid #303030;
       outline: none;
       background-color: rgba(255, 255, 255, 0.5);
-      border-radius: 16px 16px 16px 16px;
+      border-radius: 16px;
       margin-top: 25px;
       box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
       font-size: 1.2em;
@@ -53,15 +82,13 @@ main {
  
  .location-box {
    .location {
-      font-size: 3em;
+      font-size: 2.5em;
       font-weight: 900;
-      text-shadow: 3px 3px rgba(50, 50, 70, 0.2);
     }
     .date {
-      font-size: 2em;
+      font-size: 1.5em;
       font-weight: 400;
       text-align: center;
-      text-shadow: 2px 2px rgba(50, 50, 70, 0.1);
     }
  }
 
@@ -70,22 +97,20 @@ main {
       position: relative;
       display: inline-block;
       margin: 10px auto;
-      border-radius: 16px;
       padding: 15px 25px;
-      font-size: 5em;
+      font-size: 4em;
       font-weight: 900;
     }
    .weather {
       font-size: 2em;
       font-weight: 700;
-      text-shadow: 3px 3px rgba(50, 50, 70, 0.1);
     }
  }
 
  .radio-box {
     width: auto;
     height: 1em;
-    font-family: Roboto;
+    font-family: "Roboto";
     font-weight: 300;
     padding: 10px;
     cursor: pointer;
